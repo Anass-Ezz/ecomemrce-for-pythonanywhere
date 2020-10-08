@@ -1,0 +1,152 @@
+{% extends "ecommerce/base.html" %} {% load static %} {% block content %}
+<link rel="stylesheet" href="{% static 'css/product_list.css' %}" />
+{% if product_list %}
+<div class="container-fluid">
+  <div class="categories row mt-2">
+    <div class="col-3">
+      <div class="list-group bg-dark">
+        {% for category in categories %}
+        <button
+          type="button"
+          class="list-group-item list-group-item-action bg-dark text-light"
+        >
+          {{category.name}}
+        </button>
+        {%endfor%}
+      </div>
+      {% comment %}
+      <p class="text-primary">
+        <i class="fas fa-info-circle"></i> the category browsing is not avalable
+        because of the DEMO version, also generated dynamically from the
+        back-end
+      </p>
+      {% endcomment %}
+      <div class="alert alert-success mt-2" role="alert">
+        <h4 class="alert-heading">
+          <i class="fas fa-info-circle mr-2"></i>Note
+        </h4>
+        <p></p>
+        <hr />
+        <p class="mb-0">
+          The category browsing is not avalable because of the DEMO version.
+        </p>
+      </div>
+    </div>
+    <div class="col-9">
+      <!--Carousel Wrapper-->
+      <div
+        id="carousel-example-2"
+        class="carousel slide carousel-fade"
+        data-ride="carousel"
+      >
+        <!--Indicators-->
+        <ol class="carousel-indicators">
+          {% for category in categories%} {% if forloop.first%}
+          <li
+            data-target="#carousel-example-2"
+            data-slide-to="{{forloop.counter0}}"
+            class="active"
+          ></li>
+          {%else%}
+          <li
+            data-target="#carousel-example-2"
+            data-slide-to="{{forloop.counter0}}"
+          ></li>
+          {%endif%} {% endfor %}
+        </ol>
+        <!--/.Indicators-->
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+          {% for category in categories%} {%if forloop.first%}
+          <div class="carousel-item active">
+            <div class="view">
+              <img
+                style="width: 100%; height: 420px; object-fit: cover"
+                class="d-block w-100"
+                src="{{category.image.url}}"
+                alt="First slide"
+              />
+              <div class="mask rgba-black-light"></div>
+            </div>
+            <div class="carousel-caption">
+              <h3 class="h3-responsive">{{category.name}}</h3>
+              <a role="button" class="btn btn-muted mb-2">Discover</a>
+            </div>
+          </div>
+          {%else%}
+          <div class="carousel-item">
+            <!--Mask color-->
+            <div class="view">
+              <img
+                style="width: 1280px; height: 420px; object-fit: cover"
+                class="d-block w-100"
+                src="{{category.image.url}}"
+                alt="Second slide"
+              />
+              <div class="mask rgba-black-strong"></div>
+            </div>
+            <div class="carousel-caption">
+              <h3 class="h3-responsive">{{category.name}}</h3>
+              <a role="button" class="btn btn-muted mb-2">Discover</a>
+            </div>
+          </div>
+          {%endif%} {%endfor%}
+        </div>
+        <!--/.Slides-->
+        <!--Controls-->
+        <a
+          class="carousel-control-prev"
+          href="#carousel-example-2"
+          role="button"
+          data-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a
+          class="carousel-control-next"
+          href="#carousel-example-2"
+          role="button"
+          data-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+        <!--/.Controls-->
+      </div>
+      <!--/.Carousel Wrapper-->
+    </div>
+  </div>
+  <div class="raw">
+    {% for product in product_list %}
+    <a style="color: white" href="{{ product.get_absolute_url }}">
+      <div class="product_card rounded">
+        <img class="product_img" src="{{product.image.url}}" />
+        <h5 class="ml-2">{{ product.name }}</h5>
+        <p class="ml-2">
+          {{ product.price }} MAD {% if product.old_price %}
+          <span class="old_price">{{product.old_price}} MAD </span>
+          {% if product.get_exeption_display == 'new' %}
+          <span class="percent bg-info"
+            >{{ product.get_exeption_display }}</span
+          >
+          {% else %}
+          <span class="percent bg-danger"
+            >{{ product.get_exeption_display }}</span
+          >
+          {% endif %} {% endif %}
+        </p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="row">
+    <div class="col-12 text-center">
+      <img class="error_img" src="{% static 'images/404 error.png' %}" />
+      <h1 class="error_txt">OOPS! ther is no product related to this</h1>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends "ecommerce/base.html" %} {% load i18n %} {% block head_title %}{% trans "Verify Your E-mail Address" %}{% endblock %} {% block content %}
+{%load static%}
+<style>
+    .card{
+        width:fit-content;
+        text-align:center;
+    }
+    
+</style>
+
+<div class="card bg-dark mx-auto mt-5">
+
+    <h5 class="card-header info-color white-text text-center py-4">
+        <strong>Email Verification</strong>
+    </h5>
+
+    <!--Card content-->
+    <div><img class="m-4" style="width:200px;" src="{% static 'images/email_sent.png' %}"></div>
+    <div class="card-body px-lg-5 pt-0">
+
+        <!-- Form -->
+        <h1>Verify Your E-mail Address</h1>
+
+        <p>
+            We have sent an e-mail to you for verification. Check your inbox and follow the link provided to finalize the signup process.<br> Please contact us if you do not receive it within a few minutes.
+        </p>
+        {% comment %} <form class="text-center" style="color: #757575;" action="#!"> {% endcomment %}
+        
+            
+
+    </div>
+
+</div>
+
+{% endblock %}

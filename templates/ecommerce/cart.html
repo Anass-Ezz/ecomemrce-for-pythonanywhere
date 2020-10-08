@@ -1,0 +1,169 @@
+{% extends "ecommerce/base.html" %} {% load static %} {% block content %}
+ <link rel="stylesheet" href="{% static 'css/cart.css' %}" /> 
+{% if cart_items%}
+
+<div class="raw">
+<!--Section: Block Content-->
+<section>
+
+  <!--Grid row-->
+  <div class="row">
+
+    <!--Grid column-->
+    <div class="col-lg-8">
+
+      <!-- Card -->
+      <div class="mb-3">
+        <div class="pt-4 wish-list">
+
+          <h5 class="mb-4"><span class="badge badge-secondary badge-pill">{{ cart_items|length }}{% if items_len < 2  %} item {% else %} items{% endif %}</span></h5>
+          {% for item in cart_items %}
+          <div class="row mb-4">
+            <div style="width:fit-content;" class="col-md-5 col-lg-3 col-xl-3">
+          <a href="{{ item.product.get_absolute_url }}">
+              <div style="width:fit-content; display:inline-block;"  class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+                <img class=" ima-fluid" id="cart_item_img"
+                  src="{{ item.product.image.url }}">
+              </div>
+              <!--show this info whene phone-->
+              <div class="item_info_phone">
+                    <a style="color:white;" href="{% url 'ecommerce:product_detail' item.product.slug %}">
+                    <h5>{{ item.product.name }}</h5></a>
+                    <pre class="mb-1 text-muted text-uppercase small">Text : {{item.text }}</pre>
+                    <pre class="mb-3 text-muted text-uppercase small">{{item.varients}}</pre>
+                    
+                  </div>
+            </a>
+            </div>
+            <div class="col-md-7 col-lg-9 col-xl-9">
+              <div>
+                <div class="d-flex justify-content-between">
+              <!--show this info whene Desktop-->
+                  <div class="item_info_desktop">
+                    <a style="color:white;" href="{% url 'ecommerce:product_detail' item.product.slug %}">
+                    <h5>{{ item.product.name }}</h5></a>
+                    <pre class="mb-1 text-muted text-uppercase small">Text : {{item.text }}</pre>
+                    <pre class="mb-3 text-muted text-uppercase small">{{item.varients}}</pre>
+                    
+                  </div>
+                  
+                  <div class="quantity_controll">
+                    <a href="/quantity?id={{ item.id }}&f={{ '-' }}" role="button"><i class="fas fa-minus-square"></i></a
+        >  {{ item.quantity }}  <a href="/quantity?id={{ item.id }}&f={{ '+' }} "
+          ><i class="fas fa-plus-square"></i>
+                    <small id="passwordHelpBlock" class="form-text text-muted text-center">
+                      (Note, 10 piece)
+                    </small>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                  
+                    <a href="/delete?id={{ item.id }} " type="button" class=" text-danger card-link-secondary small text-uppercase mr-3"><i
+                        class="fas fa-trash-alt mr-1"></i> Remove item </a>
+                  </div>
+                  <p class="mb-0"><span><strong id="summary">{{ item.item_total}} MAD</strong></span></p class="mb-0">
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="pt-4">
+
+          <h5 class="mb-4">we will shipp your order to you via AMANA</h5>
+
+          <img class="mr-2 rounded " width="100px"
+            src="{% static 'images/amana.jpg' %}">
+          
+          
+        </div>
+      </div>
+      <!-- Card -->
+
+    </div>
+    <!--Grid column-->
+
+    <!--Grid column-->
+    <div class="col-lg-4">
+
+      <!-- Card -->
+      <div class="mb-3">
+        <div class="pt-4">
+
+
+          <div class="list-group list-group-flush">
+  
+          <h5 class="mb-3">The total amount of</h5>
+          <h5 class="list-group-item list-group-item-action">Temporary amount
+              <span class="float-right">{{order.order_total}} MAD</span></h5>
+          <h5 class="list-group-item list-group-item-action">Shipping
+              <span class="float-right">Included</span></h5>
+          {% if order.promo_code %}
+          <h5 class="list-group-item list-group-item-action">Promo code
+              <span class="float-right">-{{order.discount}} %</span></h5>
+          {% endif %}
+          <h5 class="list-group-item list-group-item-action"><strong>The total amount of</strong>
+                <strong>
+                  <p class="mb-0">(including VAT)</p>
+                </strong>
+              <span class="float-right bg-success text-white"><strong>
+              {% if order.after_discount_total %}
+              {{ order.after_discount_total }} MAD
+              {% else %}
+              {{ order.order_total }} MAD
+              {% endif %}
+              </strong></span>
+          </h5>
+
+          <form class="card p-2 rounded-0" method="POST" action="{% url 'ecommerce:promo_code' %}">
+          {% csrf_token %}
+            <div class="input-group rounded-0">
+              <input type="text" class="form-control rounded-0" style="border:solid 1px #AA66CC" name="code" placeholder="Promo code" aria-label="Recipient's username" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-secondary btn-md waves-effect m-0" type="submit">Redeem</button>
+              </div>
+            </div>
+          </form>
+          </div>
+
+          
+<a role="button" href="{% url 'ecommerce:setting_shipping_address' %}" class="btn btn-primary btn-block">
+      ORDER
+    </a>
+
+          <a role="button" href="/" class="btn btn-secondary btn-block mt-5">KEEP SHOPING</a>
+          
+
+        </div>
+      </div>
+      <!-- Card -->
+
+      <!-- Card -->
+      
+      <!-- Card -->
+
+    </div>
+    <!--Grid column-->
+
+  </div>
+  <!-- Grid row -->
+
+</section>
+<!--Section: Block Content-->
+</div>
+{% else %}
+    <div style="text-align: center;">
+      <img class="empty_cart_image"
+        src="{% static 'images/cart empty.png' %} "
+      />
+      <h2 style="margin-top: 20px;">Oops! your cart is empty</h2>
+      <a href="/" class="btn btn-secondary btn-lg">KEEP SHOPPING</a>
+    </div>
+    {% endif %}
+
+{% endblock %}

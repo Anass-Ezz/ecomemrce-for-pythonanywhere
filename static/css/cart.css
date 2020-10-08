@@ -1,0 +1,27 @@
+@media only screen and (max-width: 2000px) {
+    .empty_cart_image {
+        width: 35%;
+    }
+    #cart_item_img {
+        width: 100%;
+    }
+    .item_info_phone {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .empty_cart_image {
+        width: 90%;
+    }
+    #cart_item_img {
+        width: 100px;
+    }
+    .item_info_phone {
+        display: inline-block;
+        margin: 10px;
+    }
+    .item_info_desktop {
+        display: none;
+    }
+}

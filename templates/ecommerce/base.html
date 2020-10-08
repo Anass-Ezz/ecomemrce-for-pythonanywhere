@@ -1,0 +1,167 @@
+{% load static %}{% load account socialaccount %} {% providers_media_js %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <!-- Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Material Design for Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/css/mdb.min.css" rel="stylesheet" />
+    <title>Mine</title>
+    <link rel="shortcut icon" href="{%  static 'images/favicon.ico' %}">
+</head>
+
+<body class="body">
+    <!--Navbar -->
+    <div style="background-color:rgba(0, 9, 31, 1);" class="text-light text-center">Shipping and payment in Morocco handled by AMANA</div>
+    <nav class="mb-1 sticky-top navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand mr-0" style="font-size:25px; line-height:18px;" href="{% url 'ecommerce:product_list' %}">Middle<br><span class="text-danger mt-0" style="font-size:10px;" >DEMO VERSION</span></a>
+        <div class="search_form ml-0">
+                    <form style="display:block; margin:0 auto;" class="form-inline" method="GET" action="{% url 'ecommerce:search' %}">
+                        <div class="md-form my-0" >
+                            <input class="form-control sm-2" name="search" type="text" placeholder="Search" aria-label="Search" />
+                        </div>
+                    </form>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555" aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
+            <div class="cart_and_account">
+                    {% if user.is_authenticated %}
+                    <div id="on_desktop">
+                        <div class="nav-item avatar dropdown d-inline-block ml-1" id="account">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img style="width: 35px; height:35px; object-fit: cover;" src="{{ profile_image.url }}" class="rounded-circle z-depth-0" alt="avatar image" />
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink-55">
+                                <a class="dropdown-item" href="{% url 'ecommerce:profile' %}"><i class="fas fa-user mr-4"></i>PROFILE</a>
+                                <a class="dropdown-item" href="{% url 'ecommerce:my_orders' %}"><i class="fas fa-check-square mr-4"></i>MY ORDERS</a>
+                                <a class="dropdown-item" href="/accounts/logout/"><i class="fas fa-sign-out-alt mr-4"></i>LOGOUT</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="on_phone">
+                        <ul class="list-group bg-dark list-group-flush">
+                            <a href="{% url 'ecommerce:profile' %}"><li class="list-group-item bg-dark text-light"><i class="fas fa-user mr-4"></i>PROFILE</li></a>
+                            <a href="{% url 'ecommerce:my_orders' %}"><li class="list-group-item bg-dark text-light"><i class="fas fa-check-square mr-4"></i>MY ORDERS</li></a>
+                            <a href="/accounts/logout/"><li class="list-group-item bg-dark text-light"><i class="fas fa-sign-out-alt mr-4"></i>LOGOUT</li></a>
+                            
+                          </ul>
+                            <!-- <a class="" href="{% url 'ecommerce:profile' %}"><i class="fas fa-user mr-4"></i>PROFILE</a>
+                            <a class="" href="{% url 'ecommerce:my_orders' %}"><i class="fas fa-check-square mr-4"></i>MY ORDERS</a>
+                            <a class="" href="/accounts/logout/"><i class="fas fa-sign-out-alt mr-4"></i>LOGOUT</a> -->
+                    </div>
+                    {% else %}
+                    <div class="nav-item dropdown mt-2 d-inline-block ml-3" id="account">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i> LOGIN 
+                        </a>
+                        <div class="dropdown" >
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <form class="mx-3 mb-0" method='post' action='/accounts/login/' id='login'>
+                                {% csrf_token %}
+                                <div class="form-row mb-0">
+                                            <div class="col">
+                                                <!-- First name -->
+                                                <div class="md-form">
+                                                    <label for="id_city" class="text-primary ml-2">{{ login_form.login.label }} </label>
+                                                    {{ login_form.login }} 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row ">
+                                            <div class="col">
+                                                <!-- First name -->
+                                                <div class="md-form mb-0 mt-2">
+                                                    <label for="id_city" class="text-primary ml-2">{{ login_form.password.label }} </label>
+                                                    {{ login_form.password }} 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row ">
+                                            <div class="col">
+                                                <!-- First name -->
+                                                <div class="md-form mb-0 mt-4">
+                                                    <div class="text-primary ml-2 ">{{ login_form.remember.label }} {{ login_form.remember }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a class="dropdown-item text-primary mt-3" href="/accounts/password/reset/">Forgot password?</a>
+                                        <div class="row">
+                                <button style="width:200px;display:block; margin:0 auto; " type="submit" class=" btn btn-outline-info btn-rounded btn-block my-2 waves-effect">Log in</button>
+                                <a style="width:200px; display:block; margin:0 auto; " 
+                                    class="  btn btn-outline-info btn-rounded btn-block my-2 waves-effect " 
+                                    role="button" 
+                                    href="{%provider_login_url "facebook" method="oauth2"%}"
+                                    >
+                                        <i class="fab fa-facebook-f fa-lg mr-2"></i>
+                                        facebook
+                                </a>
+                                <p class="text-info ml-3"><i class="fas fa-info-circle mr-2"></i>Facebook login is no longer functioning on this version</p>
+                                <a style="display:block; margin :0 auto;" class="btn btn-primary aqua-gradient" href="/accounts/signup/">Sign up</a></p>
+                                        </div>
+                            </form><br>
+                            </div>
+                        </div>   
+                    </div>
+            {% endif %}
+                    <div class="nav-item mt-3 d-inline-block pr-2" id="cart">
+                        <a style="color: white;" class="cart_link " href="{% url 'ecommerce:cart_summery' %}">
+                            <i class="fas fa-cart-plus fa-lg"></i>
+                            <h class="cart_number ml-1">{{ items_len }}</h4>
+                        </a>
+                    </div>
+        </div>
+
+
+      </div>
+      
+    </nav>
+    <!--/.Navbar -->
+    {% if messages %}
+{% for message in messages %}
+{% if 'w' in message.tags %}
+<div style="width:100%; opacity: 90%; position:absolute; z-index:5;" class="message bg-danger rounded-0 text-center text-uppercase">
+  {{message}}
+
+</div>
+{% else %}
+<div style="width:100%; opacity: 90%; position:absolute; z-index:5;" class="message bg-success rounded-0 text-center text-uppercase">
+  {{message}}
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+    <div class="container-fluid">
+        {% block content %}
+        
+        {% endblock content %}
+    </div>
+<script>
+  window.setTimeout(function() {
+    $(".message").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+    }, 2000);
+  </script>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <!-- Material Design for Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/js/mdb.min.js"></script>
+</body>
+
+</html>

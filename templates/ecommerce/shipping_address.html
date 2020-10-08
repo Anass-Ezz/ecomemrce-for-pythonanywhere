@@ -1,0 +1,216 @@
+{% extends "ecommerce/base.html" %} {% load static %} {% block content %}
+<link rel="stylesheet" href="{% static 'css/shipping_address.css' %}" />
+
+<!--Main layout-->
+<main class="mt-2 pt-4">
+  <div class="container wow fadeIn">
+    <!-- Heading -->
+    <h2 class="my-2 h2 text-center">Shipping Address</h2>
+
+    <!--Grid row-->
+    <div class="row mt-5">
+      <!--Grid column-->
+      <div class="col-md-8 mb-4">
+        <!--Card-->
+        <div style="width: fit-content" class="card">
+          <!--Card content-->
+          <form
+            class="shipping_form card-body"
+            method="POST"
+            action="{% url 'ecommerce:setting_shipping_address' %}"
+          >
+            {% csrf_token %}
+            <!--address-->
+
+            <div style class="d-inline-block md-form mr-5">
+              {{form.first_name}}
+              <label for="address" class="">First Name</label>
+            </div>
+
+            <div class="d-inline-block md-form mr-5">
+              {{form.last_name}}
+              <label for="address" class="">Last Name</label>
+            </div>
+
+            <div class="md-form mb-5">
+              {{form.address_1}}
+              <label for="address" class="">Address</label>
+            </div>
+            <!--address-2-->
+            <div class="md-form mb-5">
+              {{form.address_2}}
+              <label for="address" class="">Address 2</label>
+            </div>
+            <!--Grid column-->
+            <div class="md-form mb-5">
+              <input
+                type="text"
+                id="country"
+                class="form-control"
+                value="Morocco"
+                disabled
+              />
+              <label for="country" class="text-muted">Country</label>
+            </div>
+            <!--Grid column-->
+
+            <div style="display: block" class="md-form mb-5">
+              {{form.state}}
+              <label for="id_state" class="text-muted"
+                >{{form.state.label}}</label
+              >
+            </div>
+            <!--Grid column-->
+            <div style="display: block" class="md-form mb-5">
+              {{form.city}}
+              <label for="id_city" class="text-muted"
+                >{{form.city.label}}</label
+              >
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="md-form mb-5">
+              {{form.zip_code}}
+              <label class="text-muted" for="id_zip_code">Zip</label>
+            </div>
+
+            <div class="md-form mb-5">
+              <label for="id_phone" class="text-muted"
+                >{{form.phone.label}}</label
+              >
+              {{form.phone}}
+            </div>
+            {% comment %}
+            <button class="btn btn-primary btn-lg" type="submit">
+              Finsh Order
+            </button>
+            {% endcomment %}
+            <!-- Button trigger modal -->
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#exampleModalCenter"
+            >
+              ORDER
+            </button>
+
+            <!-- Modal -->
+            <div
+              class="modal fade"
+              id="exampleModalCenter"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalCenterTitle"
+              aria-hidden="true"
+            >
+              <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div
+                  style="width: fit-content; text-align: center"
+                  class="modal-content"
+                >
+                  <div class="modal-header">
+                    <h5
+                      class="modal-title text-dark"
+                      id="exampleModalLongTitle"
+                    >
+                      Finishing Order
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body text-dark">
+                    <p>
+                      We will shipp your order via Amana, also you can pay for
+                      your order at AMANA agency.
+                    </p>
+                    <img
+                      style="width: 300px"
+                      src="{% static 'images/amana.jpg' %}"
+                    />
+                  </div>
+                  <div class="modal-footer">
+                    <a
+                      role="button"
+                      class="text-danger mr-3"
+                      data-dismiss="modal"
+                      >Close</a
+                    >
+                    <button type="submit" class="btn btn-primary">
+                      Finsh Order
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!--/.Card-->
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-md-4 mb-4">
+        <!-- Heading -->
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted">Your cart</span>
+          <span class="badge badge-secondary badge-pill"
+            >{{ cart_items|length }}</span
+          >
+        </h4>
+
+        <!-- Cart -->
+        <ul class="list-group mb-3 z-depth-1">
+          {% for item in cart_items %}
+          <li
+            class="list-group-item d-flex justify-content-between lh-condensed"
+          >
+            <div class="view zoom overlay z-depth-1 rounded mb-3 mr-2 mb-md-0">
+              <img
+                style="width: 80px"
+                class="img-fluid"
+                src="{{ item.product.image.url }}"
+              />
+            </div>
+            <div>
+              <h6 class="my-0 text-muted">{{ item.product.name }}</h6>
+              <small class="text-muted">{{ item.quantity }} piece</small>
+            </div>
+            <span class="text-success">{{ item.item_total }} MAD</span>
+          </li>
+          {% endfor %} {% if order.promo_code %}
+          <li class="list-group-item d-flex justify-content-between text-muted">
+            <span>Promo Code</span>
+            <strong class="text-dark"> -{{order.discount}} % </strong>
+          </li>
+          {% endif %}
+          <li class="list-group-item d-flex justify-content-between text-muted">
+            <span>Total</span>
+            <strong class="text-dark">
+              {% if order.after_discount_total %} {{order.after_discount_total}}
+              MAD {% else %} {{order.order_total}} MAD {% endif %}
+            </strong>
+          </li>
+        </ul>
+        <!-- Cart -->
+
+        <!-- Promo code -->
+
+        <!-- Promo code -->
+      </div>
+      <!--Grid column-->
+    </div>
+    <!--Grid row-->
+  </div>
+</main>
+<!--this script for hiding the alert message after 2 seconds-->
+
+{% endblock %}

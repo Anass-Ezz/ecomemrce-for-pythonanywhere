@@ -1,0 +1,89 @@
+{% extends "ecommerce/base.html" %} {% load i18n %} {% load account socialaccount %}{% providers_media_js %} {% block head_title %}{% trans "Sign In" %}{% endblock %} {% block content %}
+
+<style>
+    .card{
+        width:fit-content;
+    }
+    .signup input{
+        color:white;
+    }
+    
+    
+</style>
+
+<div class="card bg-dark mx-auto mt-5">
+
+    <h5 class="card-header info-color white-text text-center py-4">
+        <strong>Log up</strong>
+    </h5>
+
+    <!--Card content-->
+    <div class="card-body px-lg-5 pt-0">
+
+        <!-- Form -->
+        {% comment %} <form class="text-center" style="color: #757575;" action="#!"> {% endcomment %}
+        <form class="signup text-center" id="signup_form" method="post" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            
+            <div class="form-row">
+                <div class="col">
+                    <!-- First name -->
+                    <div class="md-form">
+                        {{ form.login }} 
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <!-- First name -->
+                    <div class="md-form">
+                        {{ form.password }} 
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <!-- First name -->
+                    <div class="md-form">
+                        {{ form.remember.label }} 
+                        {{ form.remember }} 
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Log in</button>
+        </form>
+        <ul class="errorlist">
+            {% for key, value in form.errors.items %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ value }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            {% endfor %}
+        </ul>
+        <a class="btn btn-outline-info btn-rounded btn-block my-2 waves-effect z-depth-0" role="button" href="{%provider_login_url "facebook" method="oauth2"%}"><i class="fab fa-facebook-f fa-lg mr-2"></i>facebook</a>
+            <p class="text-primary">
+        <i class="fas fa-info-circle mt-2 mr-2"></i>facebook login is no longer
+        functioning on the DEMO version
+      </p>
+            <p4 class="text-primary" >
+            <i class="fas fa-info-circle"></i>
+            IF YOU ARE NEW HERE
+            </p4>
+            <a href="/accounts/signup/" ><button class="btn btn-primary btn-sm">SIGNUP</button></a>
+        <!-- Form -->
+
+    </div>
+
+</div>
+<script>
+  window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+    }, 2000);
+  </script>
+
+{% endblock %}

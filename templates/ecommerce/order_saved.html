@@ -1,0 +1,20 @@
+{% extends "ecommerce/base.html" %} {% load static %} {% block content %}
+<style>
+.success #success{
+    width:250px;
+    display:block;
+    margin:0 auto;
+}
+.success{
+    display:block;
+    margin:0 auto;
+    text-align:center
+}
+</style>
+<div class=" success raw">
+<img id="success" src="{% static 'images/success.png' %}">
+<h1>Order Saved Successfully!</h1>
+<h6 class="mt-4">Check your order status while we are consulting, working, and shipping your order with AMANA. Thank You</h6>
+<a href="{% url 'ecommerce:my_orders' %}" class="btn btn-secondary mt-3">MY ORDERS</a>
+</div>
+{% endblock %}

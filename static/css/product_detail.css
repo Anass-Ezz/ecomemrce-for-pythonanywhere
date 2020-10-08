@@ -1,0 +1,114 @@
+@media only screen and (max-width: 2000px) {
+  .raw {
+    width: 500px;
+    margin: 30px;
+    float: left;
+  }
+  .raw img {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+  }
+  .raw_2 {
+    margin: 30px;
+    display: inline-block;
+    width: 500px;
+  }
+  .raw_2 .form-control {
+    width: 200px !important;
+    background-color: orangered;
+  }
+  .raw_2 h1 {
+    /* padding-top: 10px; */
+    /* padding-bottom: 10px; */
+    font-size: 30px;
+  }
+  .raw_2 h2 {
+    color: #00dba0;
+    /* padding-top: 10px;
+        padding-bottom: 10px; */
+  }
+  .raw_2 p {
+    /* padding-top: 10px;
+        padding-bottom: 10px; */
+  }
+  .varient {
+    display: inline-block;
+  }
+  .percent {
+    font-size: 15px;
+    color: white;
+    border-radius: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-left: 6px;
+  }
+  .old_price {
+    color: gray;
+    text-decoration: line-through;
+    font-size: 20px;
+  }
+  form button {
+    float: right;
+  }
+  [type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  /* IMAGE STYLES */
+  [type="radio"] + #varient {
+    cursor: pointer;
+  }
+  /* CHECKED STYLES */
+  [type="radio"]:checked + #varient {
+    outline: 2px solid rgb(187, 14, 14);
+  }
+  .varient_name_label {
+    display: block;
+    font-size: 13px;
+    margin-top: 2px;
+    color: #00dba0;
+    text-align: center;
+    border-bottom: #00dba0 solid 2px;
+  }
+  /*tooltip css*/
+}
+
+@media only screen and (max-width: 768px) {
+  .raw {
+    width: 100%;
+    margin: 20px auto;
+  }
+  .raw_2 h1 {
+    border: none;
+  }
+  .raw_2 h2 {
+    color: #00dba0;
+    border: none;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .raw_2 p {
+    border: none;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .raw_2 {
+    margin: 10px;
+    display: inline-block;
+    width: auto;
+  }
+  .percent {
+    font-size: 15px;
+    color: white;
+    background-color: red;
+    border-radius: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-left: 6px;
+    display: block;
+    width: fit-content;
+  }
+}

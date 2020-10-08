@@ -1,0 +1,118 @@
+{% extends "ecommerce/base.html" %} {% load static %} {% block content %}
+<style>
+  input[type="file"] {
+    display: none;
+  }
+  .custom-file-upload {
+    border: 1px solid white;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  .custom-file-upload:hover {
+    color: #00dba0;
+    border: 1px solid #00dba0;
+  }
+</style>
+<link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+<div class="row mt-5">
+  <div class="image_form col">
+    <img
+      src="{{profile.photo.url}}"
+      class="profile_photo rounded-circle float-left m-5"
+    />
+    <form
+      method="POST"
+      enctype="multipart/form-data"
+      action="{% url 'ecommerce:edit_profile_photo' %}"
+    >
+      {% csrf_token %}
+      <label for="file-upload" class="custom-file-upload ml-5">
+        <i class="fa fa-cloud-upload"></i> change Image
+      </label>
+      <input id="file-upload" name="photo" type="file" required />
+      <button
+        style="display;block: margin:0 auto;"
+        class="btn btn-primary btn-sm"
+        id="save"
+        type="submit"
+      >
+        Upload
+      </button>
+    </form>
+  </div>
+  <div class="info col">
+    <form method="POST" action="{% url 'ecommerce:profile' %}">
+      {% csrf_token %}
+
+      <div class="form-row">
+        <div class="col">
+          <div class="md-form">
+            {{form.first_name}}
+            <label for="id_first_name" class="text-primary"
+              >{{form.first_name.label}}</label
+            >
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <div class="md-form">
+            <label for="id_last_name" class="text-primary"
+              >{{form.last_name.label}}</label
+            >
+            {{form.last_name}}
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <div class="md-form">
+            <label for="id_email" class="text-primary"
+              >{{form.email.label}}</label
+            >
+            {{form.email}}
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <div class="md-form">
+            <label for="id_phone" class="text-primary"
+              >{{form.phone.label}}</label
+            >
+            {{form.phone}}
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <!-- First name -->
+          <div class="md-form">{{form.country}}</div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary mt-5" type="submit">
+        save modifications
+      </button>
+    </form>
+  </div>
+  <div class="col">
+    <a
+      role="button"
+      href="/accounts/password/change/"
+      class="btn btn-outline-primary btn-block"
+    >
+      <i class="fas fa-key mr-2"></i>Change Password
+    </a>
+    <a
+      href="{% url 'ecommerce:my_orders' %}"
+      role="button"
+      class="mt-4 btn btn-outline-primary btn-block"
+    >
+      <i class="fas fa-bars mr-2"></i>My Orders
+    </a>
+  </div>
+</div>
+
+{% endblock %}
